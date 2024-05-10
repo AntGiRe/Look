@@ -18,8 +18,6 @@ class RegisterController extends Controller
 
     public function store(Request $request)
     {
-        //dd($request->get('email'));
-
         $request->request->add([
             'username' => Str::slug($request->get('username')),
         ]);
@@ -37,5 +35,10 @@ class RegisterController extends Controller
             'email' => $request->get('email'),
             'password' => Hash::make($request->get('password')),
         ]);
+
+        auth()->attempt($request->only('email', 'password'));
+
+        //Redirect to the posts index
+        return redirect()->route('posts.index');
     }
 }
