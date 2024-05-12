@@ -19,3 +19,4 @@ Route::post('/logout', [LogoutController::class, 'store'])->name('logout');
 
 //feed de usuario, si no esta autenticado no puede verlo y lo redirige al login
 Route::get('/{user:username}', [PostController::class, 'index'])->name('posts.index')->middleware('auth');
+Route::get('post/create', [PostController::class, 'create'])->name('posts.create');
