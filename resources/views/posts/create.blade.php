@@ -15,27 +15,34 @@
         </div>
 
         <div class="md:w-1/2 p-10 bg-white rounded-lg shadow-xl mt-10 md:mt-0">
-            <form action=" {{ route('register') }}" method="POST">
+            <form action=" {{ route('posts.store') }}" method="POST">
                 @csrf
                 <div class="mb-5">
-                    <label for="titulo" class="mb-2 black uppercase text-gray-500 font-bold">
+                    <label for="title" class="mb-2 black uppercase text-gray-500 font-bold">
                         Titulo
                     </label>
-                    <input id="titulo" name="titulo" type="text" placeholder="Titulo del post"
-                        value="{{ old('titulo') }}"
-                        class="border p-3 w-full rounded-lg @error('titulo') border-red-500 @enderror">
-                    @error('titulo')
+                    <input id="title" name="title" type="text" placeholder="Titulo del post"
+                        value="{{ old('title') }}"
+                        class="border p-3 w-full rounded-lg @error('title') border-red-500 @enderror">
+                    @error('title')
                         <p class="bg-red-500 text-white my-2 rounded-lg text-sm p-2 text-center">{{ $message }}</p>
                     @enderror
                 </div>
 
                 <div class="mb-5">
-                    <label for="descripcion" class="mb-2 black uppercase text-gray-500 font-bold">
-                        Titulo
+                    <label for="description" class="mb-2 black uppercase text-gray-500 font-bold">
+                        Descripción
                     </label>
-                    <textarea id="descripcion" name="descripcion" placeholder="Descipcion del post"
-                        class="border p-3 w-full rounded-lg @error('descripcion') border-red-500 @enderror">{{ old('descripcion') }}</textarea>
-                    @error('descripcion')
+                    <textarea id="description" name="description" placeholder="Descripcion del post"
+                        class="border p-3 w-full rounded-lg @error('description') border-red-500 @enderror">{{ old('description') }}</textarea>
+                    @error('description')
+                        <p class="bg-red-500 text-white my-2 rounded-lg text-sm p-2 text-center">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                <div class="mb-5">
+                    <input type="hidden" name="image" value="{{ old('image') }}">
+                    @error('image')
                         <p class="bg-red-500 text-white my-2 rounded-lg text-sm p-2 text-center">{{ $message }}</p>
                     @enderror
                 </div>

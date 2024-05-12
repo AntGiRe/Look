@@ -20,6 +20,6 @@ class ImageController extends Controller
         $imagePath = public_path('uploads') . '/' . $imageName;
         $imageServer->save($imagePath);
 
-        return response()->json(['imagen' => $imageName]);
+        return response()->json(['image' => $imageName]);
     }
 }
