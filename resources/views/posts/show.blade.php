@@ -5,8 +5,8 @@
 @section('content')
     <div class="container mx-auto md:flex">
         <div class="md:w-1/2">
-            <img src="{{ asset('uploads') . '/' . $post->image}}" alt="Imagen del post {{$post->title}}">
-        
+            <img src="{{ asset('uploads') . '/' . $post->image }}" alt="Imagen del post {{ $post->title }}">
+
             <div class="p-3">
                 <p>0 Likes</p>
             </div>
@@ -20,6 +20,16 @@
                     {{ $post->description }}
                 </p>
             </div>
+
+            @auth
+                @if($post->user_id === auth()->user()->id)
+                <form action="{{route('posts.destroy', $post)}}" method="POST">
+                    @method('DELETE')
+                    @csrf
+                    <input type="submit" value="Eliminar Publicación" class="bg-red-500 hover:bg-red-600 p-2 rounded text-white font-bold mt-4 cursor-pointer" />
+                </form>
+                @endif
+            @endauth
         </div>
 
         <div class="md:w-1/2 p-5">
@@ -27,7 +37,7 @@
                 @auth
                     <p class="text-xl font-bold text-center mb-4">Agrega un nuevo comentario</p>
 
-                    @if(session('success'))
+                    @if (session('success'))
                         <div class="bg-green-500 p-2 rounded-lg mb-6 text-white text-center uppercase font-bold">
                             {{ session('success') }}
                         </div>
@@ -47,7 +57,7 @@
                         </div>
 
                         <input type="submit" value="Comentar"
-                        class="bg-sky-600 hover:bg-sky-700 transition-colors cursor-pointer uppercase font-bold w-full p-3 text-white rounded" />
+                            class="bg-sky-600 hover:bg-sky-700 transition-colors cursor-pointer uppercase font-bold w-full p-3 text-white rounded" />
                     </form>
                 @endauth
 
@@ -58,7 +68,7 @@
                                 <a href="{{ route('posts.index', $comment->user) }}" class="font-bold">
                                     {{ $comment->user->username }}
                                 </a>
-                                <p>{{$comment->content}}</p>
+                                <p>{{ $comment->content }}</p>
                                 <p class="text-sm text-gray-500">
                                     {{ $comment->created_at->diffForHumans() }}
                                 </p>
