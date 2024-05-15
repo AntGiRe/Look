@@ -24,7 +24,7 @@ class ProfileController extends Controller
             'username' => 'required|min:3|max:20|not_in:login,register,logout,edit,posts,image|unique:users,username,' . auth()->user()->id,
         ]);
 
-        if ($request->image) {
+        if ($request->profileImg) {
             $image = $request->file('profileImg');
 
             $imageName = Str::uuid() . '.' . $image->extension();
@@ -39,7 +39,7 @@ class ProfileController extends Controller
         $usuario = User::find(auth()->user()->id);
 
         $usuario->username = $request->username;
-        $usuario->profileImg = $imageName ?? '';
+        $usuario->profileImg = $imageName ?? auth()->user()->profileImg ?? null;
         $usuario->save();
 
         return redirect()->route('posts.index', ['user' => $usuario->username]);
