@@ -6,7 +6,8 @@
     <div class="flex justify-center">
         <div class="w-full md:w-8/12 lg:w-6/12 flex flex-col items-center md:flex-row">
             <div class="w-8/12 lg:w-6/12 px-5">
-                <img src="{{ $user->profileImg ? asset('profiles') . '/' . $user->profileImg : asset('img/user.svg') }}" alt="Imagen usuario" class="w-32 h-32 rounded-full mx-auto">
+                <img src="{{ $user->profileImg ? asset('profiles') . '/' . $user->profileImg : asset('img/user.svg') }}"
+                    alt="Imagen usuario" class="w-32 h-32 rounded-full mx-auto">
             </div>
             <div class="md:w-8/12 lg:w-6/12 px-5 flex flex-col items-center md:justify-center py-10 md:py-10 md:items-start">
 
@@ -26,12 +27,12 @@
                 </div>
 
                 <p class="text-gray-800 text-sm mb-3 font-bold mt-5">
-                    0
-                    <span class="font-normal">Seguidores</span>
+                    {{ $user->followers->count() }}
+                    <span class="font-normal"> @choice('Seguidor|seguidores', $user->followers->count())</span>
                 </p>
 
                 <p class="text-gray-800 text-sm mb-3 font-bold">
-                    0
+                    {{ $user->followings->count() }}
                     <span class="font-normal">Siguiendo</span>
                 </p>
 
@@ -39,6 +40,27 @@
                     {{ $user->posts->count() }}
                     <span class="font-normal">Posts</span>
                 </p>
+
+                @auth
+                    @if ($user->id !== auth()->user()->id)
+                        @if (!$user->isFollowing(auth()->user()))
+                            <form action="{{ route('followers.store', $user) }}" method="POST">
+                                @csrf
+                                <input type="submit"
+                                    class="bg-blue-600 text-white uppercase rounded-lg px-3 py-1 text-xs font-bold cursor-pointer hover:bg-blue-700 transition-all duration-200"
+                                    value="Seguir">
+                            </form>
+                        @else
+                            <form action="{{ route('followers.destroy', $user) }}" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <input type="submit"
+                                    class="bg-red-600 text-white uppercase rounded-lg px-3 py-1 text-xs font-bold cursor-pointer hover:bg-red-700 transition-all duration-200"
+                                    value="Dejar de seguir">
+                            </form>
+                        @endif
+                    @endif
+                @endauth
             </div>
         </div>
     </div>

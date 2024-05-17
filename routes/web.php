@@ -6,6 +6,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\FollowerController;
 use App\Http\Controllers\LikeController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -37,6 +38,9 @@ Route::post('/image', [ImageController::class, 'store'])->name('image.store');
 
 Route::post('/posts/{post}/likes', [LikeController::class, 'store'])->name('likes.store');
 Route::delete('/posts/{post}/likes', [LikeController::class, 'destroy'])->name('likes.destroy');
+
+Route::post('/{user:username}/follow', [FollowerController::class, 'store'])->name('followers.store');
+Route::delete('/{user:username}/unfollow', [FollowerController::class, 'destroy'])->name('followers.destroy');
 
 //feed de usuario, si no esta autenticado no puede verlo y lo redirige al login
 Route::get('/{user:username}', [PostController::class, 'index'])->name('posts.index');
