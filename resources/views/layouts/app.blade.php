@@ -7,6 +7,7 @@
         @vite('resources/css/app.css')
         @vite('resources/js/app.js')
         <title>Look - @yield('title')</title>
+        @livewireStyles
     </head>
     <body class="bg-gray-100">
         <header class="p-5 border-b bg-white shadow">
@@ -50,5 +51,6 @@
         <footer class="mt-10 text-center p-5 text-gray-500 font-bold uppercase">
             Look - Todos los derechos reservados &copy; {{ date('Y') }}
         </footer>
+        @livewireScripts
     </body>
 </html>

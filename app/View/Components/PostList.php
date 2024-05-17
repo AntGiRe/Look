@@ -8,12 +8,13 @@ use Illuminate\View\Component;
 
 class PostList extends Component
 {
+    public $posts;
     /**
      * Create a new component instance.
      */
-    public function __construct()
+    public function __construct($posts)
     {
-        //
+        $this->posts = $posts;
     }
 
     /**
