@@ -7,12 +7,18 @@ use Illuminate\Http\Request;
 use App\Models\Post;
 use Faker\Core\File;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
     public function index(User $user)
     {
         $posts = Post::where('user_id', $user->id)->latest()->paginate(20);
+
+        foreach ($posts as $post)
+        {
+            $post->image = Storage::url('look/uploads/' . $post->image);
+        }
 
         return view('dashboard', [
             'user' => $user,
@@ -45,6 +51,9 @@ class PostController extends Controller
 
     public function show(User $user, Post $post)
     {
+        //cada post tiene imagen en cloudflare hay que recuperar enlace
+        $post->image = Storage::url('look/uploads/' . $post->image);
+
         return view('posts.show', [
             'post' => $post,
             'user' => $user

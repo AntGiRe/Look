@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image; 
 
@@ -17,8 +18,8 @@ class ImageController extends Controller
         $imageServer = Image::make($image);
         $imageServer->fit(1000, 1000);
 
-        $imagePath = public_path('uploads') . '/' . $imageName;
-        $imageServer->save($imagePath);
+        //Guardar en Cloudflare R2 la imagen dentro de uploads
+        Storage::put('uploads/' . $imageName, $imageServer->encode());
 
         return response()->json(['image' => $imageName]);
     }
