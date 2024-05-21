@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
 
@@ -32,14 +33,13 @@ class ProfileController extends Controller
             $imageServer = Image::make($image);
             $imageServer->fit(1000, 1000);
 
-            $imagePath = public_path('profiles') . '/' . $imageName;
-            $imageServer->save($imagePath);
+            Storage::put('profiles/' . $imageName, $imageServer->encode());
         }
 
         $usuario = User::find(auth()->user()->id);
 
         $usuario->username = $request->username;
-        $usuario->profileImg = $imageName ?? auth()->user()->profileImg ?? null;
+        $usuario->profileImg = $imageName ?? auth()->user()->profileImg ?? NULL;
         $usuario->save();
 
         return redirect()->route('posts.index', ['user' => $usuario->username]);

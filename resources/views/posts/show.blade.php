@@ -9,18 +9,8 @@
 
             <div class="p-3 flex items-center gap-4">
                 @auth
-                    <livewire:like-post :post="$post" />    
+                    <livewire:like-post :post="$post" />
                 @endauth
-            </div>
-
-            <div>
-                <p class="font-bold">{{ $post->user->username }}</p>
-                <p class="text-sm text-gray-500">
-                    {{ $post->created_at->diffForHumans() }}
-                </p>
-                <p class="mt-5">
-                    {{ $post->description }}
-                </p>
             </div>
 
             @auth
@@ -37,6 +27,15 @@
 
         <div class="md:w-1/2 p-5">
             <div class="shadow bg-white p-5 mb-5">
+                <div>
+                    <a href="{{ route('posts.index', $post->user) }}" class="font-bold">{{ $post->user->username }}</a>
+                    <p class="text-sm text-gray-500">
+                        {{ $post->created_at->diffForHumans() }}
+                    </p>
+                    <p class="mt-5">
+                        {{ $post->description }}
+                    </p>
+                </div>
                 @auth
                     <p class="text-xl font-bold text-center mb-4">Agrega un nuevo comentario</p>
 
