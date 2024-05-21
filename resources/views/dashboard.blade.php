@@ -32,7 +32,7 @@
                                     <a href="{{ route('profile.index') }}"
                                         class="tracking-wide cursor-pointer px-3 py-2 font-bold text-sx rounded bg-slate-200 transition hover:bg-slate-300">Editar
                                     </a>
-                                    <a class="cursor-pointer">
+                                    <a href="{{ route('account.index') }}" class="cursor-pointer">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                             stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                                             <path stroke-linecap="round" stroke-linejoin="round"

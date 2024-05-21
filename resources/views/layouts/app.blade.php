@@ -34,11 +34,6 @@
                         Mi perfil
                         <div class="tooltip-arrow" data-popper-arrow></div>
                     </div>
-
-                        <form method="POST" action="{{ route('logout') }}">
-                            @csrf
-                            <button type="submit" class="font-bold uppercase text-gray-600 text-sm">Cerrar sesión</button>
-                        </form>
                     </nav> 
                 @endauth
 

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AccountController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\Auth\LoginController;
@@ -40,6 +41,8 @@ Route::delete('/posts/{post}/likes', [LikeController::class, 'destroy'])->name('
 
 Route::post('/{user:username}/follow', [FollowerController::class, 'store'])->name('followers.store');
 Route::delete('/{user:username}/unfollow', [FollowerController::class, 'destroy'])->name('followers.destroy');
+
+Route::get('/account', [AccountController::class, 'index'])->name('account.index')->middleware('auth');
 
 //feed de usuario, si no esta autenticado no puede verlo y lo redirige al login
 Route::get('/{user:username}', [PostController::class, 'index'])->name('posts.index');
