@@ -20,19 +20,10 @@ class FollowersCountProfile extends Component
         return view('livewire.followers-count-profile');
     }
 
-    #[On('userFollowed')] 
-    public function refreshComponent($userId)
+    #[On('userFollowersUpdated')] 
+    public function refreshComponent($followers)
     {
-        if ($this->user->id == $userId) {
-            $this->followers++;
-        }
+        $this->followers = $followers['followers'];
     }
 
-    #[On('userUnfollowed')] 
-    public function followerMinus($userId)
-    {
-        if ($this->user->id == $userId) {
-            $this->followers--;
-        }
-    }
 }

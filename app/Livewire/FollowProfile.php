@@ -36,7 +36,7 @@ class FollowProfile extends Component
             $this->isFollowing = true;
             $this->followers++;
 
-            $this->dispatch('userFollowed', ['userId' => $this->user->id]);
+            $this->dispatch('userFollowersUpdated', ['followers' => $this->followers]);
         }
     }
 
@@ -48,7 +48,7 @@ class FollowProfile extends Component
             $this->isFollowing = false;
             $this->followers--;
 
-            $this->dispatch('userUnfollowed', ['userId' => $this->user->id]);
+            $this->dispatch('userFollowersUpdated', ['followers' => $this->followers]);
         }
     }
 }

@@ -3,7 +3,7 @@
         <div class="flex justify-center mb-4">
             <div class="inline-flex rounded-md shadow-sm" role="group">
                 <button type="button" wire:click="loadLatest"
-                    class="justify-center w-32 inline-flex items-center px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-s-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white">
+                    class="justify-center w-32 inline-flex items-center px-4 py-2 text-sm font-medium {{$latest ? 'bg-blue-100 text-blue-700' : 'bg-white text-gray-900'}} border border-gray-200 rounded-s-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="w-5 h-5 me-2">
                         <path stroke-linecap="round" stroke-linejoin="round"
@@ -15,7 +15,7 @@
                     Para ti
                 </button>
                 <button type="button" wire:click="loadFollowing"
-                    class="justify-center w-32 inline-flex items-center px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-e-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white">
+                    class="justify-center w-32 inline-flex items-center px-4 py-2 text-sm font-medium {{$following ? 'bg-blue-100 text-blue-700' : 'bg-white text-gray-900'}} border border-gray-200 rounded-e-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="w-5 h-5 me-2">
                         <path stroke-linecap="round" stroke-linejoin="round"
@@ -32,6 +32,11 @@
             <x-view-detail-post wire:ignore :post="$post" :key="$post->id" />
         @endforeach
     </div>
+    @if ($posts->isEmpty() && $following)
+        <div class="flex justify-center items-center mt-4">
+            <p class="text-gray-600">Sigue a mas usuarios para ver sus publicaciones</p>
+        </div>
+    @endif
     <div class="flex justify-center items-center mt-4">
         @if ($posts->hasMorePages())
             <button

@@ -13,6 +13,20 @@ class LoadPosts extends Component
 
     public $perPage = 5;
     public $type = "latest";
+    public $latest = true;
+    public $following = false;
+
+    public function mount()
+    {
+        if(session()->has('type')) {
+            $this->type = session('type');
+        }
+
+        if($this->type == 'following') {
+            $this->latest = false;
+            $this->following = true;
+        }
+    }
 
     public function loadMore()
     {
@@ -22,11 +36,17 @@ class LoadPosts extends Component
     public function loadLatest()
     {
         $this->type = 'latest';
+        $this->latest = true;
+        $this->following = false;
+        session(['type' => $this->type]);
     }
 
     public function loadFollowing()
     {
         $this->type = 'following';
+        $this->following = true;
+        $this->latest = false;
+        session(['type' => $this->type]);
     }
 
     public function render()
