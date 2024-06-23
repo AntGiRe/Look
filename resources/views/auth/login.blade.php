@@ -37,7 +37,7 @@
                 </div>
 
                 <div class="mb-5">
-                    <input type="checkbox" name="remember" id="remember">
+                    <input type="checkbox" name="remember" id="remember" @if(old('remember')) checked @endif>
                     <label for="remember" class="text-gray-500 text-sm">
                         Recuérdame
                     </label>

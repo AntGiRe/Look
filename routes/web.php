@@ -13,7 +13,7 @@ use App\Http\Controllers\LikeController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', HomeController::class)->name('home')->middleware('auth');
+Route::get('/', HomeController::class)->name('home');
 
 Route::get('/register', [RegisterController::class, 'index'])->name('register');
 Route::post('/register', [RegisterController::class, 'store']);
@@ -39,8 +39,8 @@ Route::post('/image', [ImageController::class, 'store'])->name('image.store');
 Route::post('/posts/{post}/likes', [LikeController::class, 'store'])->name('likes.store');
 Route::delete('/posts/{post}/likes', [LikeController::class, 'destroy'])->name('likes.destroy');
 
-Route::post('/{user:username}/follow', [FollowerController::class, 'store'])->name('followers.store');
-Route::delete('/{user:username}/unfollow', [FollowerController::class, 'destroy'])->name('followers.destroy');
+Route::post('/{user:username}/follow', [FollowerController::class, 'store'])->name('followers.store')->middleware('auth');
+Route::delete('/{user:username}/unfollow', [FollowerController::class, 'destroy'])->name('followers.destroy')->middleware('auth');
 
 Route::get('/account', [AccountController::class, 'index'])->name('account.index')->middleware('auth');
 

@@ -5,16 +5,16 @@
 @section('content')
     <div class="flex justify-center">
         <div class="w-full md:w-8/12 lg:w-8/12 flex flex-col items-center md:flex-row">
-            <div class="w-6/12 lg:w-6/12 px-5">
+            <div class="w-full md:w-6/12 lg:w-6/12 px-5">
                 <img src="{{ $user->profileImg ? Storage::url('look/profiles/' . $user->profileImg) : asset('img/user.svg') }}"
-                    alt="Imagen usuario" class="w-32 h-32 rounded-full mx-auto">
+                    alt="Imagen usuario" class="w-24 h-24 md:w-48 md:h-48 rounded-full mx-auto">
             </div>
-            <div class="md:w-8/12 lg:w-6/12 px-5 flex flex-col items-center md:justify-center py-10 md:py-10 md:items-start">
+            <div class="md:w-8/12 lg:w-6/12 px-5 flex flex-col items-center md:justify-center py-2 md:py-10 md:items-start">
 
                 <div class="flex items-center justify-center gap-2">
-                    <p class="text-gray-700 text-2xl font-bold">{{ $user->username }}</p>
+                    <p class="text-gray-700 text-2xl font-semibold">{{ $user->username }}</p>
                     <svg data-tooltip-target="tooltip-verified" xmlns="http://www.w3.org/2000/svg" fill="none"
-                        viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-blue-500">
+                        viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="mt-1 w-6 h-6 text-sky-500">
                         <path stroke-linecap="round" stroke-linejoin="round"
                             d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                     </svg>
@@ -25,12 +25,12 @@
                         <div class="tooltip-arrow" data-popper-arrow></div>
                     </div>
 
-                    <div class="ml-5">
-                        @auth
+                    @auth
+                        <div class="ml-5">
                             @if ($user->id === auth()->user()->id)
-                                <div class="flex flex-row gap-2 items-center">
+                                <div class="flex flex-row gap-4 items-center">
                                     <a href="{{ route('profile.index') }}"
-                                        class="tracking-wide cursor-pointer px-3 py-2 font-bold text-sx rounded bg-slate-200 transition hover:bg-slate-300">Editar
+                                        class="tracking-wide cursor-pointer px-8 py-2 font-bold text-sx rounded bg-slate-200 transition hover:bg-slate-300">Editar
                                     </a>
                                     <a href="{{ route('account.index') }}" class="cursor-pointer">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
@@ -43,22 +43,22 @@
                                     </a>
                                 </div>
                             @endif
-                        @endauth
-                    </div>
+                        </div>
+                    @endauth
                 </div>
 
-                <section class="flex flex-row mt-8 gap-5">
-                    <p class="text-gray-800 text-sm mb-3 font-bold">
+                <section class="flex flex-row mt-5 gap-5 mb-3 ">
+                    <p class="text-gray-800 text-normal font-bold">
                         {{ $user->posts->count() }}
                         <span class="font-normal">publicaciones</span>
                     </p>
 
-                    <p class="text-gray-800 text-sm mb-3 font-bold">
+                    <p class="text-gray-800 text-normal font-bold">
                         {{ $user->followers->count() }}
                         <span class="font-normal"> @choice('seguidor|seguidores', $user->followers->count())</span>
                     </p>
 
-                    <p class="text-gray-800 text-sm mb-3 font-bold">
+                    <p class="text-gray-800 text-normal font-bold">
                         {{ $user->followings->count() }}
                         <span class="font-normal">seguidos</span>
                     </p>
@@ -66,28 +66,16 @@
 
                 <p class="font-bold">{{ $user->name }}</p>
 
-                <p>{{ $user->presentation }}</p>
+                <p class="mb-2">{{ $user->presentation }} Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis
+                    quis sapien euismod, maximus purus vitae.</p>
 
                 @auth
-                    @if ($user->id !== auth()->user()->id)
-                        @if (!$user->isFollowing(auth()->user()))
-                            <form action="{{ route('followers.store', $user) }}" method="POST">
-                                @csrf
-                                <input type="submit"
-                                    class="bg-blue-600 text-white uppercase rounded-lg px-3 py-1 text-xs font-bold cursor-pointer hover:bg-blue-700 transition-all duration-200"
-                                    value="Seguir">
-                            </form>
-                        @else
-                            <form action="{{ route('followers.destroy', $user) }}" method="POST">
-                                @csrf
-                                @method('DELETE')
-                                <input type="submit"
-                                    class="bg-red-600 text-white uppercase rounded-lg px-3 py-1 text-xs font-bold cursor-pointer hover:bg-red-700 transition-all duration-200"
-                                    value="Dejar de seguir">
-                            </form>
-                        @endif
-                    @endif
+                    <livewire:follow-profile :user="$user" />
                 @endauth
+                @guest
+                    <a href="{{ route('login') }}"
+                        class="bg-sky-600 text-white rounded-lg tracking-wide cursor-pointer px-8 py-2 font-bold hover:bg-sky-700 transition-all duration-200">Seguir</a>
+                @endguest
             </div>
         </div>
     </div>
