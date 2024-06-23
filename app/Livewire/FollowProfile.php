@@ -8,10 +8,16 @@ class FollowProfile extends Component
 {
     public $user;
     public $isFollowing;
+    public $followers;
 
     public function mount($user)
     {
-        $this->isFollowing = $user->isFollowing(auth()->user());
+        if (!auth()->check()) {
+            $this->isFollowing = false;
+        } else {
+            $this->isFollowing = $user->isFollowing(auth()->user());
+        }
+        $this->followers = $user->followers->count();
     }
 
     public function render()
@@ -21,10 +27,16 @@ class FollowProfile extends Component
 
     public function follow()
     {
+        if (!auth()->check()) {
+            return redirect()->route('login');
+        }
         if(!$this->user->isFollowing(auth()->user()))
         {
             $this->user->followers()->attach(auth()->user());
             $this->isFollowing = true;
+            $this->followers++;
+
+            $this->dispatch('userFollowed', ['userId' => $this->user->id]);
         }
     }
 
@@ -34,6 +46,9 @@ class FollowProfile extends Component
         {
             $this->user->followers()->detach(auth()->user());
             $this->isFollowing = false;
+            $this->followers--;
+
+            $this->dispatch('userUnfollowed', ['userId' => $this->user->id]);
         }
     }
 }

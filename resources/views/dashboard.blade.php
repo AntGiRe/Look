@@ -13,17 +13,20 @@
 
                 <div class="flex items-center justify-center gap-2">
                     <p class="text-gray-700 text-2xl font-semibold">{{ $user->username }}</p>
-                    <svg data-tooltip-target="tooltip-verified" xmlns="http://www.w3.org/2000/svg" fill="none"
-                        viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="mt-1 w-6 h-6 text-sky-500">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                    </svg>
 
-                    <div id="tooltip-verified" role="tooltip"
-                        class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
-                        Verificado
-                        <div class="tooltip-arrow" data-popper-arrow></div>
-                    </div>
+                    @if ($user->verified)
+                        <svg data-tooltip-target="tooltip-verified" xmlns="http://www.w3.org/2000/svg" fill="none"
+                            viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="mt-1 w-6 h-6 text-sky-500">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                        </svg>
+
+                        <div id="tooltip-verified" role="tooltip"
+                            class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
+                            Verificado
+                            <div class="tooltip-arrow" data-popper-arrow></div>
+                        </div>
+                    @endif
 
                     @auth
                         <div class="ml-5">
@@ -53,29 +56,19 @@
                         <span class="font-normal">publicaciones</span>
                     </p>
 
-                    <p class="text-gray-800 text-normal font-bold">
-                        {{ $user->followers->count() }}
-                        <span class="font-normal"> @choice('seguidor|seguidores', $user->followers->count())</span>
-                    </p>
+                    <livewire:followers-count-profile :user="$user">
 
-                    <p class="text-gray-800 text-normal font-bold">
-                        {{ $user->followings->count() }}
-                        <span class="font-normal">seguidos</span>
-                    </p>
+                        <p class="text-gray-800 text-normal font-bold">
+                            {{ $user->followings->count() }}
+                            <span class="font-normal">seguidos</span>
+                        </p>
                 </section>
 
                 <p class="font-bold">{{ $user->name }}</p>
 
-                <p class="mb-2">{{ $user->presentation }} Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis
-                    quis sapien euismod, maximus purus vitae.</p>
+                <p class="mb-2">{{ $user->presentation }}</p>
 
-                @auth
-                    <livewire:follow-profile :user="$user" />
-                @endauth
-                @guest
-                    <a href="{{ route('login') }}"
-                        class="bg-sky-600 text-white rounded-lg tracking-wide cursor-pointer px-8 py-2 font-bold hover:bg-sky-700 transition-all duration-200">Seguir</a>
-                @endguest
+                <livewire:follow-profile :user="$user" />
             </div>
         </div>
     </div>

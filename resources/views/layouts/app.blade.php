@@ -43,7 +43,7 @@
                     <a data-tooltip-target="tooltip-profile" href=" {{ route('posts.index', auth()->user()->username) }}"
                         class="ml-5 font-bold uppercase text-gray-600 text-sm">
                         <img src="{{ auth()->user()->profileImg ? Storage::url('look/profiles/' . auth()->user()->profileImg) : asset('img/user.svg') }}"
-                            alt="Imagen usuario" class="w-16 h-16 rounded-full mx-auto">
+                            alt="Imagen usuario" class="w-12 h-12 rounded-full mx-auto">
                     </a>
 
                     <div id="tooltip-profile" role="tooltip"
@@ -69,7 +69,7 @@
     </main>
 
     <footer class="mt-10 text-center p-5 text-gray-500 font-bold uppercase">
-        Look - Todos los derechos reservados &copy; {{ date('Y') }}
+        Look - Developed by AntGiRe ❤️ 
     </footer>
     @livewireScripts
 </body>
