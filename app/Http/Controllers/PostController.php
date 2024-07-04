@@ -63,14 +63,15 @@ class PostController extends Controller
     public function destroy(Post $post)
     {
         Gate::authorize('delete', $post);
-        $post->delete();
 
-        $image_path = public_path('uploads/'. $post->image);
+        $image_path = 'uploads/' . $post->image;
 
-        if (file_exists($image_path))
-        {
-            unlink($image_path);
+        //comprobar si existe la imagen en cloudflare y eliminarla
+        if (Storage::exists($image_path)) {
+            Storage::delete($image_path);
         }
+
+        $post->delete();
 
         return redirect()->route('posts.index', auth()->user());
     }

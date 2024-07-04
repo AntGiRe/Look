@@ -9,7 +9,7 @@
                 <img src="{{ $user->profileImg ? Storage::url('look/profiles/' . $user->profileImg) : asset('img/user.svg') }}"
                     alt="Imagen usuario" class="w-24 h-24 md:w-48 md:h-48 rounded-full mx-auto">
             </div>
-            <div class="md:w-8/12 lg:w-6/12 px-5 flex flex-col items-center md:justify-center py-2 md:py-10 md:items-start">
+            <div class="md:w-6/12 px-5 flex flex-col items-center md:justify-center py-2 md:py-10 md:items-start">
 
                 <div class="flex items-center justify-center gap-2">
                     <p class="text-gray-700 text-2xl font-semibold">{{ $user->username }}</p>

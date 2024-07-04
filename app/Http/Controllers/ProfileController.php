@@ -23,6 +23,9 @@ class ProfileController extends Controller
 
         $request->validate([
             'username' => 'required|min:3|max:20|not_in:login,register,logout,edit,posts,image|unique:users,username,' . auth()->user()->id,
+            'name' => 'required|min:3|max:50',
+            'profileImg' => 'image|mimes:jpeg,png,jpg|max:2048',
+            'presentation' => 'max:125',
         ]);
 
         if ($request->profileImg) {
@@ -40,6 +43,8 @@ class ProfileController extends Controller
 
         $usuario->username = $request->username;
         $usuario->profileImg = $imageName ?? auth()->user()->profileImg ?? NULL;
+        $usuario->name = $request->name;
+        $usuario->presentation = $request->presentation;
         $usuario->save();
 
         return redirect()->route('posts.index', ['user' => $usuario->username]);

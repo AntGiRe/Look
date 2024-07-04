@@ -3,5 +3,5 @@
 @section('title', 'Home')
 
 @section('content')
-    <livewire:load-posts />
+    <livewire:load-posts :key="'home'"/>
 @endsection

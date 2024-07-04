@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     @stack('styles')
     @vite('resources/css/app.css')
     @vite('resources/js/app.js')
@@ -64,11 +64,11 @@
         </div>
     </header>
 
-    <main class="container mx-auto mt-10">
+    <main class="container mx-auto pt-20 md:pt-10">
         @yield('content')
     </main>
 
-    <footer class="mt-10 text-center p-5 text-gray-500 font-bold uppercase">
+    <footer class="mt-4 text-center p-5 text-gray-500 font-bold uppercase">
         Look - Developed by AntGiRe ❤️ 
     </footer>
     @livewireScripts
